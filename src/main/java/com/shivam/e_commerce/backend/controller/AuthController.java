@@ -20,7 +20,6 @@ public class AuthController {
     public String Register(@RequestBody RegisterRequest request){
         return userService.Register(request);
     }
-
     @PostMapping("/Login")
     public String Login(@RequestBody Loginrequest request){
         return userService.Login(request);

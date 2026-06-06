@@ -39,4 +39,8 @@ public class ProductService {
        return productRepository.save(existingProduct);
     }
 
+    public List<Product> Searchproducts(String name){
+        return productRepository.findByNameContainingIgnoreCase(name);
+    }
+
 }

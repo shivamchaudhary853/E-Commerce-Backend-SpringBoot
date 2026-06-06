@@ -36,7 +36,6 @@ public class UserService {
         userRepository.save(user);
         return "User Registered Successfully";
     }
-
     public String Login(Loginrequest request){
 
         User user = userRepository.findByemail(request.getEmail())

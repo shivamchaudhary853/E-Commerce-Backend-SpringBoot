@@ -36,4 +36,8 @@ public class ProductController {
         productService.DeleteProductById(id);
         return "Product Deleted Successfully";
     }
+    @GetMapping("/search")
+    public List<Product> SearchProducts(@RequestParam String name){
+        return productService.Searchproducts(name);
+    }
 }
