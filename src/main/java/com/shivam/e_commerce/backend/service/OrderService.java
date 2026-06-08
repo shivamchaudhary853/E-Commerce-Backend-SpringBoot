@@ -14,13 +14,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    private final KafkaProducerService kafkaProducerService;
 
     public Order placeOrder(Order order){
 
         Order savedOrder =
                 orderRepository.save(order);
 
-        KafkaProducerService.SendMessage(
+        kafkaProducerService.SendMessage(
                 "Order Placed Successfully. Order Id: "
                         + savedOrder.getId()
         );
@@ -29,5 +30,34 @@ public class OrderService {
     }
     public List<Order> GetALlOrders(){
         return orderRepository.findAll();
+    }
+
+    public Order updateStatus(
+            Long id,
+            String status){
+
+        Order order =
+                orderRepository.findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Order Not Found"
+                                )
+                        );
+
+        order.setStatus(status);
+
+        Order updatedOrder =
+                orderRepository.save(order);
+
+        kafkaProducerService.SendMessage(
+                "Order "
+                        + updatedOrder.getId()
+                        + " status changed to "
+                        + status
+        );
+
+        System.out.println("🔥 Kafka Event Sent");
+
+        return updatedOrder;
     }
 }

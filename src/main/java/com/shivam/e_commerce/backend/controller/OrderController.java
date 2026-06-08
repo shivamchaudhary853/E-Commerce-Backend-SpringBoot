@@ -16,10 +16,14 @@ public class OrderController {
 
     @PostMapping("/place")
     public Order PlaceOrder(@RequestBody Order order){
-        return orderService.PlaceOrder(order);
+        return orderService.placeOrder(order);
     }
     @GetMapping("/all")
     public List<Order> GetALlOrders(){
         return orderService.GetALlOrders();
+    }
+    @PutMapping("/status/{id}")
+    public Order updatestatus(@PathVariable Long id , @RequestParam String status){
+        return orderService.updateStatus(id,status);
     }
 }
