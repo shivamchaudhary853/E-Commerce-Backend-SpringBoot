@@ -5,7 +5,6 @@ import com.shivam.e_commerce.backend.dto.Loginrequest;
 import com.shivam.e_commerce.backend.dto.RegisterRequest;
 import com.shivam.e_commerce.backend.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.shivam.e_commerce.backend.security.JwtService;
@@ -16,8 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final JwtService jwtService;
-
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
 
     public String Register(RegisterRequest request) {

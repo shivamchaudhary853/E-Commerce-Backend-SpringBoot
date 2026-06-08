@@ -3,6 +3,7 @@ package com.shivam.e_commerce.backend.service;
 import com.shivam.e_commerce.backend.Repository.ProductRepository;
 import com.shivam.e_commerce.backend.entity.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,9 @@ public class ProductService {
     public Product addProduct(Product product){
         return productRepository.save(product);
     }
+    @Cacheable("products")
     public List<Product> GetAllProducts(){
+        System.out.println("Fetching from database...");
         return productRepository.findAll();
     }
     public Product GetProductById(Long id){
