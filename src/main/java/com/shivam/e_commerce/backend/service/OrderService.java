@@ -15,8 +15,17 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
 
-    public Order PlaceOrder(Order order){
-        return orderRepository.save(order);
+    public Order placeOrder(Order order){
+
+        Order savedOrder =
+                orderRepository.save(order);
+
+        KafkaProducerService.SendMessage(
+                "Order Placed Successfully. Order Id: "
+                        + savedOrder.getId()
+        );
+
+        return savedOrder;
     }
     public List<Order> GetALlOrders(){
         return orderRepository.findAll();
